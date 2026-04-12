@@ -1,8 +1,6 @@
 # Desarrollo-de-Aplicaciones-Empresariales
 ### Gestión de Ventas
 
-Aquí tienes el contenido limpio y formateado para que simplemente lo copies y pegues en tu archivo README.md. He eliminado las etiquetas de código y los encabezados innecesarios para que se vea como un documento profesional de GitHub:
-
 Prototipo Funcional: Sistema Modular de Registro de Ventas
 Estado del Proyecto: Prototipo Funcional (Avance del 60%)
 
