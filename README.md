@@ -82,23 +82,3 @@ A pesar del avance funcional, se han proyectado las siguientes áreas para la en
 * **Módulo de Clientes:** Registro y trazabilidad de compras asociadas al RUT del cliente.
 
 ---
-
-## 🧠 Reflexión sobre el Desarrollo
-Un desafío técnico central fue garantizar que los errores de entrada de datos (como costos superiores al precio de venta) no corrompieran las métricas del Dashboard. Esto se resolvió mediante la implementación de filtros lógicos en **Pandas** que detectan anomalías en tiempo real, derivándolas al módulo de pérdidas en lugar de promediarlas como ganancias, asegurando así la integridad contable del sistema.
-"""
-
-with open("README.md", "w", encoding="utf-8") as f:
-    f.write(readme_content)
-
-
-```
-Tu archivo README.md está listo. He estructurado el contenido para resaltar los aspectos técnicos (arquitectura modular, stack tecnológico) y funcionales (lógica contable, KPIs, algoritmos de detección de pérdidas) que un profesor de nivel superior valorará en la entrega de un proyecto de ingeniería.
-
-[file-tag: code-generated-file-0-1776029362483011210]
-
-El archivo incluye:
-- **Resumen ejecutivo** del estado del proyecto (60%).
-- **Detalle de la arquitectura** (explicación de `app.py`, `modules/`, etc.).
-- **Instrucciones técnicas** para la instalación y ejecución.
-- **Descripción de módulos clave** como el Dashboard Analítico y el sistema de detección de pérdidas.
-- **Reflexión técnica** sobre el uso de la lógica de datos para evitar errores contables.
