@@ -1,40 +1,44 @@
 # Desarrollo-de-Aplicaciones-Empresariales
 #Gestión de Ventas
 
-```python?code_reference&code_event_index=1
-readme_content = """# Prototipo Funcional: Sistema Modular de Registro de Ventas
+Aquí tienes el contenido limpio y formateado para que simplemente lo copies y pegues en tu archivo README.md. He eliminado las etiquetas de código y los encabezados innecesarios para que se vea como un documento profesional de GitHub:
 
-**Estado del Proyecto:** Prototipo Funcional (Avance del 60%)
-**Autores:** Catalina Vergara & Francisco Benavides
-**Institución:** Universidad Católica de Temuco (UCT)
-**Fecha de Entrega:** 12 de abril de 2026
+Prototipo Funcional: Sistema Modular de Registro de Ventas
+Estado del Proyecto: Prototipo Funcional (Avance del 60%)
 
----
+Autores: Catalina Vergara & Francisco Benavides
 
-## 📌 Resumen Ejecutivo
-Este sistema es una aplicación de gestión comercial diseñada para transformar el registro de transacciones en inteligencia de negocios. A través de una interfaz de alto contraste denominada **"Onyx & Gold"**, el software permite no solo capturar ventas, sino analizar la rentabilidad en tiempo real, detectar pérdidas operativas y gestionar la logística de insumos.
+Institución: Universidad Católica de Temuco (UCT)
+
+Fecha de Entrega: 12 de abril de 2026
+
+📌 Resumen Ejecutivo
+Este sistema es una aplicación de gestión comercial diseñada para transformar el registro de transacciones en inteligencia de negocios. A través de una interfaz de alto contraste denominada "Onyx & Gold", el software permite no solo capturar ventas, sino analizar la rentabilidad en tiempo real, detectar pérdidas operativas y gestionar la logística de insumos.
 
 Actualmente, el proyecto cuenta con un núcleo estable que integra procesamiento contable, persistencia de datos en sesión y visualización analítica avanzada mediante gráficos interactivos.
 
----
+🛠️ Arquitectura y Tecnologías
+El software se ha construido bajo un paradigma de desarrollo modular, facilitando la escalabilidad y el mantenimiento del código para futuras iteraciones académicas o comerciales.
 
-## 🛠️ Arquitectura y Tecnologías
-El software se ha construido bajo un paradigma de **desarrollo modular**, facilitando la escalabilidad y el mantenimiento del código para futuras iteraciones académicas o comerciales.
+Stack Tecnológico:
+Lenguaje: Python 3.x
 
-### Stack Tecnológico:
-* **Lenguaje:** Python 3.x
-* **Framework de Interfaz:** [Streamlit](https://streamlit.io/) (Para la creación de la web app).
-* **Procesamiento de Datos:** [Pandas](https://pandas.pydata.org/) (Gestión de DataFrames y lógica contable).
-* **Visualización:** [Plotly](https://plotly.com/) (Gráficos dinámicos en modo oscuro).
-* **Estilizado:** CSS inyectado para una experiencia de usuario (UX) de alta gama.
+Framework de Interfaz: Streamlit (Para la creación de la web app).
 
-### Estructura del Proyecto:
-* `app.py`: Controlador principal que gestiona el flujo de navegación y la integración de módulos.
-* `modules/database.py`: Módulo encargado de la persistencia de datos (actualmente en `session_state`).
-* `modules/styles.py`: Definición de la capa visual premium mediante selectores CSS.
-* `modules/tabs_content.py`: Implementación de la lógica de negocio, cálculos de márgenes y motores de búsqueda.
+Procesamiento de Datos: Pandas (Gestión de DataFrames y lógica contable).
 
----
+Visualización: Plotly (Gráficos dinámicos en modo oscuro).
+
+Estilizado: CSS inyectado para una experiencia de usuario (UX) de alta gama.
+
+Estructura del Proyecto:
+app.py: Controlador principal que gestiona el flujo de navegación y la integración de módulos.
+
+modules/database.py: Módulo encargado de la persistencia de datos (actualmente en session_state).
+
+modules/styles.py: Definición de la capa visual premium mediante selectores CSS.
+
+modules/tabs_content.py: Implementación de la lógica de negocio, cálculos de márgenes y motores de búsqueda.
 
 ## 🚀 Instalación y Ejecución
 Para iniciar la aplicación en un entorno local, siga estas instrucciones:
