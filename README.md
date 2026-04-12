@@ -1,5 +1,5 @@
 # Desarrollo-de-Aplicaciones-Empresariales
-#Gestión de Ventas
+### Gestión de Ventas
 
 Aquí tienes el contenido limpio y formateado para que simplemente lo copies y pegues en tu archivo README.md. He eliminado las etiquetas de código y los encabezados innecesarios para que se vea como un documento profesional de GitHub:
 
@@ -12,12 +12,12 @@ Institución: Universidad Católica de Temuco (UCT)
 
 Fecha de Entrega: 12 de abril de 2026
 
-📌 Resumen Ejecutivo
+## 📌 Resumen Ejecutivo
 Este sistema es una aplicación de gestión comercial diseñada para transformar el registro de transacciones en inteligencia de negocios. A través de una interfaz de alto contraste denominada "Onyx & Gold", el software permite no solo capturar ventas, sino analizar la rentabilidad en tiempo real, detectar pérdidas operativas y gestionar la logística de insumos.
 
 Actualmente, el proyecto cuenta con un núcleo estable que integra procesamiento contable, persistencia de datos en sesión y visualización analítica avanzada mediante gráficos interactivos.
 
-🛠️ Arquitectura y Tecnologías
+## 🛠️ Arquitectura y Tecnologías
 El software se ha construido bajo un paradigma de desarrollo modular, facilitando la escalabilidad y el mantenimiento del código para futuras iteraciones académicas o comerciales.
 
 Stack Tecnológico:
@@ -31,7 +31,7 @@ Visualización: Plotly (Gráficos dinámicos en modo oscuro).
 
 Estilizado: CSS inyectado para una experiencia de usuario (UX) de alta gama.
 
-Estructura del Proyecto:
+## 🧱 Estructura del Proyecto:
 app.py: Controlador principal que gestiona el flujo de navegación y la integración de módulos.
 
 modules/database.py: Módulo encargado de la persistencia de datos (actualmente en session_state).
