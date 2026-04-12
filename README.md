@@ -1,5 +1,5 @@
 # Desarrollo-de-Aplicaciones-Empresariales
-### Gestión de Ventas
+### ↗️ Gestión de Ventas
 
 Prototipo Funcional: Sistema Modular de Registro de Ventas
 Estado del Proyecto: Prototipo Funcional (Avance del 60%)
