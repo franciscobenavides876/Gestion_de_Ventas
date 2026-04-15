@@ -2,79 +2,63 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import plotly.express as px
-import plotly.graph_objects as go
+import plotly.graph_objects as go  # ESTE ES EL IMPORT QUE FALTABA
 from modules.database import save_venta, load_ventas, init_db
 import time
-import re # Librería esencial para la restricción de caracteres en el RUT
+import re
 
 def render_ventas():
     st.title("💸 Registro de Ventas")
-    
-    # Carga de datos desde Firebase para el historial
     df_actual = load_ventas()
 
-    with st.sidebar:
-        st.header("🛒 Nueva Transacción")
-        with st.form("registro_venta", clear_on_submit=True):
-            prod = st.text_input("📦 Nombre del Producto", placeholder="Ej: Café")
-            
-            # Captura del RUT con placeholder guía
-            rut_input = st.text_input("🆔 RUT del Cliente", placeholder="12345678-K")
-            
-            # value=None mantiene los campos numéricos limpios (sin el 0.0 inicial)
-            c_uni = st.number_input("💵 Costo de Compra ($)", min_value=0.0, step=100.0, value=None, placeholder="0.00")
-            p_uni = st.number_input("💰 Precio de Venta ($)", min_value=0.0, step=100.0, value=None, placeholder="0.00")
-            
-            btn_reg = st.form_submit_button("🚀 Registrar Venta", use_container_width=True)
-            
-            if btn_reg:
-                # 1. Limpieza profunda: quitamos todo lo que no sea número o K
-                rut_limpio = re.sub(r'[^0-9kK]', '', rut_input)
+    # --- RESTRICCIÓN PARA ADMIN: Ocultar Sidebar ---
+    if st.session_state.auth_status != "admin":
+        with st.sidebar:
+            st.header("🛒 Nueva Transacción")
+            with st.form("registro_venta", clear_on_submit=True):
+                prod = st.text_input("📦 Nombre del Producto", placeholder="Ej: Café")
+                rut_input = st.text_input("🆔 RUT del Cliente", placeholder="12345678-K")
+                c_uni = st.number_input("💵 Costo de Compra ($)", min_value=0.0, step=100.0, value=None)
+                p_uni = st.number_input("💰 Precio de Venta ($)", min_value=0.0, step=100.0, value=None)
                 
-                # 2. Verificación de campos vacíos
-                if not prod or not p_uni or not rut_input:
-                    st.error("❌ Error: Debes completar todos los campos obligatorios.")
+                btn_reg = st.form_submit_button("🚀 Registrar Venta", use_container_width=True)
                 
-                # 3. RESTRICCIÓN TOTAL DE CARACTERES
-                # Si el RUT limpio es diferente al RUT ingresado (sin contar guiones/puntos),
-                # o si tiene letras prohibidas, lanzamos la alerta.
-                elif not re.match(r"^[0-9]+[kK]?$", rut_limpio) or len(rut_limpio) < 7:
-                    st.error("⚠️ RUT Inválido: Solo se permiten números y la letra K al final.")
-                
-                else:
-                    # Si pasa los filtros, se procede al guardado en la nube
-                    nueva_venta = {
-                        "ID": int(datetime.now().timestamp()), 
-                        "RUT": rut_input.upper(), 
-                        "Producto": prod,
-                        "Venta Total": float(p_uni),
-                        "Costo Total": float(c_uni) if c_uni else 0.0,
-                        "Fecha": datetime.now().strftime("%d/%m/%Y %H:%M"),
-                        "Estado": "Completada"
-                    }
-                    save_venta(nueva_venta)
-                    st.toast(f"¡Venta de {prod} registrada!", icon="✅")
-                    time.sleep(1)
-                    st.rerun()
+                if btn_reg:
+                    rut_limpio = re.sub(r'[^0-9kK]', '', rut_input)
+                    if not prod or not p_uni or not rut_input:
+                        st.error("❌ Completa los campos obligatorios.")
+                    elif not re.match(r"^[0-9]+[kK]?$", rut_limpio) or len(rut_limpio) < 7:
+                        st.error("⚠️ RUT Inválido.")
+                    else:
+                        nueva_venta = {
+                            "ID": int(datetime.now().timestamp()), 
+                            "RUT": rut_input.upper(), 
+                            "Producto": prod,
+                            "Venta Total": float(p_uni),
+                            "Costo Total": float(c_uni) if c_uni else 0.0,
+                            "Fecha": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                            "Estado": "Completada"
+                        }
+                        save_venta(nueva_venta)
+                        st.toast(f"¡Venta registrada!", icon="✅")
+                        time.sleep(1)
+                        st.rerun()
 
-        st.markdown("---")
-        st.header("🧮 Calculadora de Vuelto")
-        monto_pago = st.number_input("Cliente paga con:", min_value=0.0, step=500.0, value=None, placeholder="0.00", key="pago_cliente")
-        
-        if p_uni is not None and p_uni > 0:
-            st.info(f"Monto a cobrar: *${p_uni:,.0f}*")
-            if monto_pago is not None and monto_pago > 0:
-                vuelto = monto_pago - p_uni
-                if vuelto >= 0: 
-                    st.success(f"Devolver: *${vuelto:,.0f}*")
-                else: 
-                    st.warning(f"Faltan: ${abs(vuelto):,.0f}")
-        else:
-            st.caption("Ingresa un precio arriba para calcular el vuelto.")
-
+            st.markdown("---")
+            st.header("🧮 Calculadora de Vuelto")
+            monto_pago = st.number_input("Cliente paga con:", min_value=0.0, step=500.0, value=None, key="pago_cliente")
+            
+            # Intentamos obtener p_uni del formulario si existe
+            if 'p_uni' in locals() and p_uni:
+                st.info(f"Monto a cobrar: ${p_uni:,.0f}")
+                if monto_pago:
+                    vuelto = monto_pago - p_uni
+                    if vuelto >= 0: st.success(f"Devolver: ${vuelto:,.0f}")
+                    else: st.warning(f"Faltan: ${abs(vuelto):,.0f}")
+    
+    # --- VISIBLE PARA TODOS ---
     st.markdown("### 📋 Historial en la Nube")
     if not df_actual.empty:
-        # Orden ascendente por ID para mostrar trazabilidad cronológica
         st.dataframe(df_actual.sort_values(by="ID", ascending=False), use_container_width=True)
     else:
         st.info("Aún no hay registros en la base de datos.")
@@ -82,9 +66,7 @@ def render_ventas():
 def render_dashboard():
     st.title("📊 Análisis de Resultados")
     df_ventas = load_ventas()
-    
-    # Filtro de seguridad: solo procesamos lo que no ha sido anulado
-    df_completadas = df_ventas[df_ventas["Estado"] == "Completada"]
+    df_completadas = df_ventas[df_ventas["Estado"] == "Completada"] if not df_ventas.empty else pd.DataFrame()
     
     if not df_completadas.empty:
         t_ingresos = df_completadas["Venta Total"].sum()
@@ -93,58 +75,26 @@ def render_dashboard():
         
         col1, col2, col3 = st.columns(3)
         col1.metric("Ingresos Reales", f"${t_ingresos:,.0f}")
-        col2.metric("Costos Operativos", f"${t_costos:,.0f}", delta_color="inverse")
-        col3.metric("Utilidad Neta", f"${balance:,.0f}", delta=f"{balance:,.0f}")
-
-        if balance < 0:
-            st.error(f"⚠️ Alerta: El balance actual es negativo (${abs(balance):,.0f} en pérdida).")
-        
-        df_prod = df_completadas.groupby("Producto")[["Costo Total", "Venta Total"]].sum().reset_index()
-        df_prod["Ganancia"] = df_prod["Venta Total"] - df_prod["Costo Total"]
+        col2.metric("Costos Operativos", f"${t_costos:,.0f}")
+        col3.metric("Utilidad Neta", f"${balance:,.0f}")
 
         c1, c2 = st.columns(2)
         with c1:
+            # AQUÍ ES DONDE SE USABA 'go'
             fig = go.Figure(data=[
                 go.Bar(name='Ingresos', x=['Totales'], y=[t_ingresos], marker_color='#2ecc71'),
                 go.Bar(name='Costos', x=['Totales'], y=[t_costos], marker_color='#e74c3c')
             ])
-            fig.update_layout(title='Balance de Caja (General)', barmode='group', template="plotly_dark")
+            fig.update_layout(title='Balance General', barmode='group', template="plotly_dark")
             st.plotly_chart(fig, use_container_width=True)
 
         with c2:
-            df_solo_ganancias = df_prod[df_prod["Ganancia"] > 0]
-            if not df_solo_ganancias.empty:
-                fig_prod = px.bar(df_solo_ganancias, x="Producto", y="Ganancia", 
-                                 color_discrete_sequence=['#2ecc71'],
-                                 title="Ganancias Netas por Producto")
-                fig_prod.update_layout(template="plotly_dark")
-                st.plotly_chart(fig_prod, use_container_width=True)
-            else:
-                st.info("No hay productos con ganancias positivas.")
-
-        st.markdown("---")
-        df_perdidas = df_prod[df_prod["Ganancia"] < 0].copy()
-
-        if not df_perdidas.empty:
-            st.subheader("🚩 Detalle de Pérdidas")
-            df_perdidas["Monto Perdido"] = df_perdidas["Ganancia"].abs()
-            
-            p_col1, p_col2 = st.columns(2)
-            with p_col1:
-                fig_p = px.bar(df_perdidas, x="Producto", y="Monto Perdido",
-                             title="Productos con Saldo Negativo",
-                             color_discrete_sequence=['#e74c3c'])
-                fig_p.update_layout(template="plotly_dark")
-                st.plotly_chart(fig_p, use_container_width=True)
-            
-            with p_col2:
-                st.write("📋 **Resumen de pérdidas detectadas:**")
-                for _, row in df_perdidas.iterrows():
-                    st.error(f"El producto **{row['Producto']}** generó una pérdida literal de **${row['Monto Perdido']:,.0f}**")
-        else:
-            st.success("✅ No se registran pérdidas en los productos actuales.")
+            df_prod = df_completadas.groupby("Producto")["Venta Total"].sum().reset_index()
+            fig_prod = px.pie(df_prod, values='Venta Total', names='Producto', title="Ventas por Producto")
+            fig_prod.update_layout(template="plotly_dark")
+            st.plotly_chart(fig_prod, use_container_width=True)
     else:
-        st.info("No hay ventas completadas para mostrar en el Dashboard.")
+        st.info("No hay datos para el Dashboard.")
 
 def render_devoluciones():
     st.title("🔄 Gestión de Anulaciones")
