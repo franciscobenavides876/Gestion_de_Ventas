@@ -1,84 +1,93 @@
-# Desarrollo-de-Aplicaciones-Empresariales
-### ↗️ Gestión de Ventas
+# Prototipo Funcional: Sistema Modular de Registro de Ventas
+## Documentación Técnica y Análisis de Ingeniería
 
-Prototipo Funcional: Sistema Modular de Registro de Ventas
-Estado del Proyecto: Prototipo Funcional (Avance del 60%)
-
-Autores: Catalina Vergara & Francisco Benavides
-
-Institución: Universidad Católica de Temuco (UCT)
-
-Fecha de Entrega: 12 de abril de 2026
-
-## 📌 Resumen Ejecutivo
-Este sistema es una aplicación de gestión comercial diseñada para transformar el registro de transacciones en inteligencia de negocios. A través de una interfaz de alto contraste denominada "Onyx & Gold", el software permite no solo capturar ventas, sino analizar la rentabilidad en tiempo real, detectar pérdidas operativas y gestionar la logística de insumos.
-
-Actualmente, el proyecto cuenta con un núcleo estable que integra procesamiento contable, persistencia de datos en sesión y visualización analítica avanzada mediante gráficos interactivos.
-
-## 🛠️ Arquitectura y Tecnologías
-El software se ha construido bajo un paradigma de desarrollo modular, facilitando la escalabilidad y el mantenimiento del código para futuras iteraciones académicas o comerciales.
-
-Stack Tecnológico:
-Lenguaje: Python 3.x
-
-Framework de Interfaz: Streamlit (Para la creación de la web app).
-
-Procesamiento de Datos: Pandas (Gestión de DataFrames y lógica contable).
-
-Visualización: Plotly (Gráficos dinámicos en modo oscuro).
-
-Estilizado: CSS inyectado para una experiencia de usuario (UX) de alta gama.
-
-## 🧱 Estructura del Proyecto:
-app.py: Controlador principal que gestiona el flujo de navegación y la integración de módulos.
-
-modules/database.py: Módulo encargado de la persistencia de datos (actualmente en session_state).
-
-modules/styles.py: Definición de la capa visual premium mediante selectores CSS.
-
-modules/tabs_content.py: Implementación de la lógica de negocio, cálculos de márgenes y motores de búsqueda.
-
-## 🚀 Instalación y Ejecución
-Para iniciar la aplicación en un entorno local, siga estas instrucciones:
-
-1. **Instalar dependencias necesarias:**
-   ```bash
-   pip install streamlit pandas plotly
-   ```
-
-2. **Ejecutar la aplicación:**
-   Desde la raíz del proyecto, ejecute:
-   ```bash
-   python -m streamlit run app.py
-   ```
+**Nombres:** Catalina Vergara, Francisco Benavides  
+**Universidad:** Universidad Católica de Temuco (UCT)  
+**Fecha de Entrega:** 19 de abril de 2026
 
 ---
 
-## 📊 Funcionalidades del Prototipo
-
-### 1. Gestión de Ventas y Flujo de Caja
-El núcleo operativo presenta un diseño de "panel dividido". Incluye un formulario intuitivo para el registro de productos, una **calculadora de vuelto** integrada y un historial dinámico que permite la trazabilidad total de la jornada.
-
-### 2. Dashboard Analítico de Resultados (KPIs)
-El sistema actúa como una herramienta de inteligencia de negocios. Mediante tarjetas visuales de alto contraste, se visualizan:
-* **Ingresos Brutos:** Total de ventas percibido.
-* **Costos Operativos:** Inversión en productos vendidos.
-* **Utilidad Neta:** El margen de beneficio real después de costos.
-
-### 3. Detección Temprana de Pérdidas
-El software incluye un algoritmo preventivo que segrega automáticamente productos que no generen beneficios. Si un ítem registra un saldo negativo, el sistema lo despliega en un panel de alerta roja para facilitar la toma de decisiones administrativas.
-
-### 4. Control de Anulaciones y Logística de Insumos
-* **Anulaciones:** Permite revertir transacciones generando automáticamente un comprobante de reintegro.
-* **Implementos:** Lista de verificación interactiva para asegurar que el local cuente siempre con los recursos necesarios (aseo, papelería, etc.).
+## Índice
+1. [Introducción](#introducción)
+2. [Especificaciones Técnicas y Configuración](#1-especificaciones-técnicas-y-configuración)
+3. [Guía de Funcionamiento y Forma de Uso](#2-guía-de-funcionamiento-y-forma-de-uso)
+4. [Reflexión sobre el Proceso de Desarrollo](#3-reflexión-sobre-el-proceso-de-desarrollo)
+5. [Conclusión](#conclusión)
 
 ---
 
-## 📈 Trabajo Pendiente y Mejoras Futuras
-A pesar del avance funcional, se han proyectado las siguientes áreas para la entrega final:
-* **Persistencia en la Nube:** Migración de almacenamiento local a una solución de base de datos remota para acceso multiusuario.
-* **Seguridad:** Implementación de un sistema de autenticación con roles (Administrador vs. Vendedor).
-* **Exportación de Reportes:** Generación automática de balances y boletas en formato PDF.
-* **Módulo de Clientes:** Registro y trazabilidad de compras asociadas al RUT del cliente.
+## Introducción
+El proyecto **"Sistema DUMA Pro"** surge de la necesidad de modernizar la gestión comercial en negocios locales, sustituyendo procesos manuales por una solución digital centralizada. Como ingenieros en formación, nuestro objetivo fue diseñar una plataforma que no solo capture transacciones, sino que transforme esos datos en **Inteligencia de Negocios**. Bajo una estética premium denominada *Onyx & Gold*, el sistema ofrece un entorno seguro, escalable y conectado en tiempo real a la nube a través de Google Firebase, permitiendo a los administradores tomar decisiones informadas basadas en utilidades reales y detección de pérdidas.
 
 ---
+
+## 1. Especificaciones Técnicas y Configuración
+El sistema se basa en un *stack* tecnológico moderno de Python, diseñado para ser ligero, eficiente y con persistencia de datos en la nube.
+
+### 1.1 Librerías Requeridas y Dependencias
+Para garantizar el funcionamiento de todos los módulos, es imperativo instalar las siguientes librerías:
+
+* **Streamlit:** Framework principal para la interfaz web reactiva.
+* **Firebase-Admin:** SDK oficial para la conexión con *Google Cloud Firestore*.
+* **Bcrypt:** Librería de *hashing* criptográfico para protección de credenciales.
+* **Pandas:** Gestión de datos y lógica contable.
+* **Plotly:** Motor de gráficos dinámicos e interactivos.
+
+### 1.2 Instrucciones de Instalación y Seguridad
+1.  **Instalar dependencias:**
+    ```bash
+    pip install streamlit pandas plotly firebase-admin bcrypt
+    ```
+2.  **Configuración de la Llave de Seguridad:**
+    Es fundamental que el archivo `firebase-key.json` se encuentre en la raíz del proyecto para permitir la conexión con la base de datos encriptada.
+3.  **Ejecutar la aplicación:**
+    ```bash
+    python -m streamlit run app.py
+    ```
+
+### 1.3 Estructura Modular del Proyecto
+* `app.py`: Controlador principal (navegación y roles).
+* `modules/database.py`: Persistencia en Firebase y seguridad.
+* `modules/styles.py`: Capa visual (CSS Custom).
+* `modules/tabs_content.py`: Lógica de negocio y motores de búsqueda.
+
+---
+
+## 2. Guía de Funcionamiento y Forma de Uso
+
+### 2.1 Sistema de Autenticación y Cambio de Roles
+* **Acceso Administrador:** Gestión estratégica. 
+    * **Usuario:** `admin` | **Contraseña:** `123456`
+    * Permite ver Dashboard, Implementos y Devoluciones.
+* **Acceso Empleado:** Operación diaria rápida.
+    * Acceso directo a Ventas y Devoluciones.
+* **Cerrar Sesión:** Botón disponible en la barra lateral para limpiar el estado de sesión.
+
+### 2.2 Módulos Principales
+* **Ventas:** Formulario validado con normalización de RUT mediante Regex y calculadora de vuelto integrada.
+* **Dashboard (Admin):** Visualización de KPIs (Ingresos, Costos, Utilidad Neta) y detección visual de productos con margen negativo.
+* **Implementos (Admin):** Registro de faltantes y lista dinámica de suministros para reposición.
+* **Devoluciones:** Búsqueda por ID único en Firebase y actualización del estado de venta a "Anulada".
+
+---
+
+## 3. Reflexión sobre el Proceso de Desarrollo
+
+### 3.1 Visión y Propósito
+Buscamos trascender el prototipo académico para ofrecer una solución empresarial que equilibre la **eficiencia operativa** del empleado con la **visión estratégica** del administrador.
+
+### 3.2 Desafíos Enfrentados
+* **Persistencia de Datos:** Superamos la volatilidad de datos locales migrando a **Google Cloud Firestore (NoSQL)**.
+* **Integridad de la Información:** Implementamos motores de validación estricta para evitar que datos mal ingresados corrompieran los análisis financieros.
+
+### 3.3 Intervención de IA y Aporte Humano
+* **Apoyo de la IA:** Facilitó el diseño visual con CSS, la implementación técnica de `bcrypt` y la resolución de errores de conexión.
+* **Autoría Propia (La Estructura):** Nosotros diseñamos la arquitectura modular, la lógica de cálculo de márgenes, la jerarquía de roles y las reglas de validación de negocio. La IA fue la herramienta; nosotros los arquitectos.
+
+### 3.4 Aspectos Técnicos Complejos
+Mantenemos una actitud de aprendizaje sobre la **latencia asíncrona** de Google Cloud y la **matemática interna de encriptación** de Bcrypt, los cuales aplicamos funcionalmente aunque su teoría profunda sigue siendo objeto de estudio.
+
+---
+
+## Conclusión
+El **"Sistema DUMA Pro"** integra programación, bases de datos y diseño UX para profesionalizar la gestión de negocios. Logramos hitos clave en seguridad (encriptación), decisiones basadas en datos (Dashboard de utilidades) y escalabilidad (nube), consolidando nuestra base en el desarrollo de software moderno.
